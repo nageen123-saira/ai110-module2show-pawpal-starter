@@ -4,13 +4,40 @@
 
 **a. Initial design**
 
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
+I designed four classes: `Task`, `Pet`, `Owner`, and `Scheduler`. `Task` holds 
+a single care activity (description, duration, priority, optional fixed time, 
+frequency, completion status). `Pet` groups tasks for one animal. `Owner` 
+manages multiple pets and stores the daily time constraint 
+(`available_minutes_per_day`). `Scheduler` is the only class that reasons 
+across pets — it builds the daily plan, sorts by priority, filters, and 
+detects conflicts, keeping `Pet` and `Owner` as simple data holders.
+
+**Core user actions**
+1. Add a pet — the owner can register a pet (name, species) so the system 
+   has something to plan care around.
+2. Add/edit a task — the owner can create care tasks (e.g. walk, feeding, 
+   meds) for a pet, each with a duration and a priority level.
+3. View today's plan — the owner can generate a daily schedule that orders 
+   tasks sensibly (by priority and time) and briefly explains the ordering.
 
 **b. Design changes**
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
+After AI code review, I made several changes to close gaps between the 
+skeleton and what the scheduler actually needs to do:
+- `Pet.add_task()` now stamps `task.pet_name` automatically instead of 
+  relying on it being set correctly elsewhere.
+- Added `Task.start_date` so recurring tasks ("daily"/"weekly") have an 
+  actual date to compute the next occurrence from.
+- Decided `build_daily_plan()` will use a greedy-by-priority strategy for 
+  fitting tasks into the owner's available time, rather than optimal 
+  packing — simpler and easier to explain to the user, at the cost of 
+  occasionally not using every minute optimally.
+- `detect_conflicts()` compares time intervals (start + duration), not 
+  just exact start times, so overlapping tasks are actually caught.
+- `get_tasks()`/`get_all_tasks()` return copies so external code can't 
+  accidentally mutate internal state.
+- Accepted a known limitation: pet names are assumed unique per owner; 
+  duplicate names would break `filter_tasks(pet_name=...)`.
 
 ---
 
