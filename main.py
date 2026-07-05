@@ -67,6 +67,17 @@ def main():
     for task in mochi_tasks:
         print(f"  - {task.description} ({task.priority})")
 
+    print("\n=== Recurring Task Demo ===")
+    daily_task = luna.tasks[-1]  # "Play time", frequency="daily"
+    print(f"  Before: '{daily_task.description}' completed={daily_task.completed}, "
+          f"start_date={daily_task.start_date}")
+    next_task = daily_task.mark_complete()
+    print(f"  After marking complete: completed={daily_task.completed}")
+    if next_task:
+        luna.add_task(next_task)
+        print(f"  Next occurrence created: start_date={next_task.start_date}, "
+              f"completed={next_task.completed}")
+
 
 if __name__ == "__main__":
     main()

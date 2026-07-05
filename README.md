@@ -44,27 +44,6 @@ pip install -r requirements.txt
 
 ## 🖥️ Sample Output
 
-Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
-
-```
-# e.g.:
-# Daily plan for Biscuit (Golden Retriever):
-#   08:00 — Morning walk (30 min) [priority: high]
-#   09:00 — Feeding (10 min) [priority: high]
-#   ...
-```
-
-## 🧪 Testing PawPal+
-
-```bash
-# Run the full test suite:
-pytest
-
-# Run with coverage:
-pytest --cov
-```
-
-Sample test output:
 
 
 === Today's Plan for Jordan (budget: 90 min) ===
@@ -87,20 +66,40 @@ Sample test output:
   - Feeding (high)
   - Brushing (low)
 
+=== Recurring Task Demo ===
+  Before: 'Play time' completed=False, start_date=2026-07-04
+  After marking complete: completed=True
+  Next occurrence created: start_date=2026-07-05, completed=False
+
+```
+
+
+## 🧪 Testing PawPal+
+
+```bash
+# Run the full test suite:
+pytest
+
+# Run with coverage:
+pytest --cov
+```
+
+Sample test output:
+
+
+
 ```
 # Paste your pytest output here
 ```
 
 ## 📐 Smarter Scheduling
 
-> Fill in once you've implemented scheduling logic.
-
 | Feature | Method(s) | Notes |
-|---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+|---|---|---|
+| Task sorting | `Scheduler.sort_by_priority()` | Sorts by priority rank (high → medium → low), then by fixed time within the same priority |
+| Filtering | `Scheduler.filter_tasks()` | Filters by completion status and/or pet name |
+| Conflict handling | `Scheduler.detect_conflicts()` | Compares time intervals `[time, time+duration)`, not just exact start times; flexible tasks are excluded |
+| Recurring tasks | `Task.mark_complete()` / `Task.next_occurrence()` | Each occurrence is its own object; completing a daily/weekly task generates the next one with an advanced `start_date` |
 
 ## 📸 Demo Walkthrough
 

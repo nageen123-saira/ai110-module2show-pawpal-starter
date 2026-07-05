@@ -43,15 +43,27 @@ skeleton and what the scheduler actually needs to do:
 
 ## 2. Scheduling Logic and Tradeoffs
 
+
 **a. Constraints and priorities**
 
-- What constraints does your scheduler consider (for example: time, priority, preferences)?
-- How did you decide which constraints mattered most?
+The scheduler considers two constraints: task priority (high/medium/low) and 
+the owner's available_minutes_per_day. Priority mattered most because a busy 
+owner needs to know what absolutely can't be skipped, so tasks are sorted by 
+priority first and packed greedily until the time budget runs out.
 
 **b. Tradeoffs**
 
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
+The scheduler uses greedy-by-priority packing instead of optimal knapsack 
+packing. This means a single long high-priority task could occasionally 
+"use up" the budget and exclude several short lower-priority tasks that 
+would have fit better together. I chose greedy because it's simple, fast, 
+and easy to explain to the user in plain language ("this task was included 
+because it's high priority and fits") — optimal packing would be harder to 
+justify in the UI.
+
+
+
+
 
 ---
 
