@@ -83,15 +83,28 @@ justify in the UI.
 
 ## 4. Testing and Verification
 
+
 **a. What you tested**
 
-- What behaviors did you test?
-- Why were these tests important?
+I tested: (1) marking a task complete, (2) adding a task increases a pet's 
+task count, (3) sorting orders tasks by priority then time, (4) completing 
+a daily task creates a correctly-dated next occurrence while a "once" task 
+does not recur, (5) conflict detection flags overlapping and identical 
+fixed times but ignores flexible or non-overlapping tasks, and (6) two 
+edge cases: a pet with no tasks produces an empty plan, and get_tasks() 
+returns a copy so external code can't mutate internal state.
 
 **b. Confidence**
 
-- How confident are you that your scheduler works correctly?
-- What edge cases would you test next if you had more time?
+I'm fairly confident (4/5) the core scheduling logic is correct, since the 
+riskiest pieces flagged in AI code review (interval-based conflicts, 
+priority ranking, recurrence dates) are all directly tested and passing. 
+With more time I'd test: multiple pets competing for the same time budget, 
+a task priority string that isn't "high"/"medium"/"low", and weekly 
+(not just daily) recurrence math.
+
+
+
 
 ---
 

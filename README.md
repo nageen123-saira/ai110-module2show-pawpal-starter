@@ -45,7 +45,6 @@ pip install -r requirements.txt
 ## 🖥️ Sample Output
 
 
-
 === Today's Plan for Jordan (budget: 90 min) ===
   [08:00] Morning walk (30 min, high priority)
       -> high priority, fits in remaining budget (90 min left before this task)
@@ -73,7 +72,7 @@ pip install -r requirements.txt
 
 ```
 
-
+---
 ## 🧪 Testing PawPal+
 
 ```bash
@@ -85,12 +84,17 @@ pytest --cov
 ```
 
 Sample test output:
+================================= test session starts =======================================
+platform win32 -- Python 3.13.7, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\Users\nagee\ai110-module2show-pawpal-starter
+plugins: anyio-4.13.0
+collected 11 items                                                                                 
 
+tests\test_pawpal.py ...........                                                             [100%]
 
+================================= 11 passed in 0.09s ========================================
 
-```
-# Paste your pytest output here
-```
+---
 
 ## 📐 Smarter Scheduling
 
