@@ -67,17 +67,36 @@ justify in the UI.
 
 ---
 
+
 ## 3. AI Collaboration
 
 **a. How you used AI**
 
-- How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
-- What kinds of prompts or questions were most helpful?
+I used AI throughout the project: brainstorming the initial class design and 
+UML diagram, generating skeleton code from that design, implementing the 
+core scheduling logic, drafting pytest tests, and writing documentation. 
+The most helpful prompts were specific ones that pointed at a real file, 
+like asking my AI assistant to review my class skeleton for missing 
+relationships and logic bottlenecks before I wrote any real logic — that 
+caught several issues early instead of after I'd already built on top of 
+a flawed design.
 
 **b. Judgment and verification**
 
-- Describe one moment where you did not accept an AI suggestion as-is.
-- How did you evaluate or verify what the AI suggested?
+Before implementing Phase 2, I asked my AI assistant to review my 
+pawpal_system.py skeleton. It flagged seven real issues, including that my 
+original conflict-detection design only caught tasks with identical start 
+times, not actual overlapping time ranges (e.g. an 08:00 task and an 08:15 
+task with overlapping durations would have been missed). Rather than 
+accepting a "good enough" fix, I had it walk through the tradeoffs of a 
+few different approaches (greedy vs. optimal packing for the time budget, 
+for example) and made an explicit decision for each one, documenting the 
+reasoning in reflection.md 1b. I verified the fix worked by writing a 
+specific test (test_detect_conflicts_flags_overlapping_fixed_time_tasks) 
+and running it against the real implementation rather than just trusting 
+that the suggested code was correct.
+
+
 
 ---
 
@@ -108,16 +127,17 @@ a task priority string that isn't "high"/"medium"/"low", and weekly
 
 ---
 
+
 ## 5. Reflection
 
-**a. What went well**
+### a. What went well
 
-- What part of this project are you most satisfied with?
+I'm most satisfied with the scheduling logic in the `Scheduler` class. In particular, `build_daily_plan()`, `sort_by_priority()`, and `detect_conflicts()` work together to transform a simple list of tasks into an organized daily plan that respects the available time budget, explains its decisions, and warns about scheduling conflicts. The most rewarding moment was seeing everything work together in the Streamlit interface—adding two tasks with the same scheduled time and immediately seeing the conflict warning appear automatically. It showed that the design and implementation were working together as intended.
 
-**b. What you would improve**
+### b. What you would improve
 
-- If you had another iteration, what would you improve or redesign?
+If I had another iteration, I would improve the greedy-by-priority scheduling strategy. While it is simple, predictable, and easy to explain, it also has an important limitation: one long, high-priority task can consume the available time budget and prevent several shorter tasks from being scheduled, even though those smaller tasks might provide more overall value. I would also assign each `Pet` a stable unique ID instead of relying on unique names. My AI design review identified this as a potential issue early in the project, but I chose not to implement it because it was outside the required project scope.
 
-**c. Key takeaway**
+### c. Key takeaway
 
-- What is one important thing you learned about designing systems or working with AI on this project?
+The biggest lesson I learned is that AI is most valuable during the design phase rather than after implementation. Having my class structure reviewed before writing the application logic helped identify important design concerns—such as interval-based conflict detection, recurrence requiring a date anchor, and the risks of returning mutable objects—that would have been much more difficult to fix later. This project also reinforced that AI should be treated as a design partner rather than the decision-maker. My role was to evaluate its suggestions, understand the tradeoffs, and make the final architectural decisions, such as choosing a greedy scheduling approach instead of pursuing a more complex optimal algorithm.

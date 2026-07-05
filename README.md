@@ -113,8 +113,6 @@ tests\test_pawpal.py ...........                                                
 | Conflict handling | `Scheduler.detect_conflicts()` | Compares time intervals `[time, time+duration)`, not just exact start times; flexible tasks are excluded |
 | Recurring tasks | `Task.mark_complete()` / `Task.next_occurrence()` | Each occurrence is its own object; completing a daily/weekly task generates the next one with an advanced `start_date` |
 
-## 📸 Demo Walkthrough
-
 
 
 ## 📸 Demo Walkthrough
@@ -162,6 +160,6 @@ tests\test_pawpal.py ...........                                                
 
 **Screenshot Here **
 
-
+![alt text](daily_plan.png)
 
  ->
