@@ -13,14 +13,22 @@ A busy pet owner needs help staying consistent with pet care. They want an assis
 Your job is to design the system first (UML), then implement the logic in Python, then connect it to the Streamlit UI.
 
 ## What you will build
+## ✨ Features
 
-Your final app should:
-
-- Let a user enter basic owner + pet info
-- Let a user add/edit tasks (duration + priority at minimum)
-- Generate a daily schedule/plan based on constraints and priorities
-- Display the plan clearly (and ideally explain the reasoning)
-- Include tests for the most important scheduling behaviors
+- **Owner & pet setup** — enter an owner's name, their daily available care 
+  time, and add one or more pets (name + species).
+- **Task management** — add care tasks per pet with a description, duration, 
+  priority (high/medium/low), an optional fixed time, and a frequency 
+  (once/daily/weekly).
+- **Smart daily planning** — `Scheduler.build_daily_plan()` sorts tasks by 
+  priority, greedily fits them into the owner's available time budget, and 
+  returns a plain-language explanation for each task included.
+- **Conflict warnings** — `Scheduler.detect_conflicts()` flags any tasks 
+  whose fixed times actually overlap (interval-based, not just identical 
+  start times), so you catch scheduling collisions before they happen.
+- **Recurring tasks** — daily/weekly tasks automatically generate their next 
+  occurrence when marked complete, anchored to a real `start_date`.
+- **Filtering** — view tasks by pet or completion status.
 
 ## Getting started
 
@@ -107,12 +115,53 @@ tests\test_pawpal.py ...........                                                
 
 ## 📸 Demo Walkthrough
 
-Describe your app in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+## 📸 Demo Walkthrough
+
+1. Open the app and set the owner's name and available minutes per day for 
+   pet care.
+2. Add a pet by entering its name and species, then click **Add pet**.
+3. Add a few tasks for that pet — mix it up with different priorities, a 
+   couple of fixed times (try two tasks at the same time to see conflict 
+   detection), and one task set to "daily" frequency.
+4. Review the **Current tasks** table to confirm everything was added 
+   correctly.
+5. Click **Generate schedule** to see today's plan: tasks appear in 
+   priority order, each with an explanation of why it was included, and 
+   any time conflicts are flagged with a warning banner above the plan.
+
+**Sample CLI output** (from running `python main.py`):
+
+\`\`\`
+=== Today's Plan for Jordan (budget: 90 min) ===
+  [08:00] Morning walk (30 min, high priority)
+      -> high priority, fits in remaining budget (90 min left before this task)
+  [08:15] Feeding (10 min, high priority)
+      -> high priority, fits in remaining budget (60 min left before this task)
+  [09:00] Feeding (10 min, high priority)
+      -> high priority, fits in remaining budget (50 min left before this task)
+  [flexible] Litter box cleaning (10 min, medium priority)
+      -> medium priority, fits in remaining budget (40 min left before this task)
+  [flexible] Play time (20 min, medium priority)
+      -> medium priority, fits in remaining budget (30 min left before this task)
+
+=== Conflict Warnings ===
+  ! Conflict: 'Morning walk' (08:00, 30 min) overlaps with 'Feeding' (08:15, 10 min)
+
+=== Filter Demo: Mochi's tasks only ===
+  - Morning walk (high)
+  - Feeding (high)
+  - Brushing (low)
+
+=== Recurring Task Demo ===
+  Before: 'Play time' completed=False, start_date=2026-07-04
+  After marking complete: completed=True
+  Next occurrence created: start_date=2026-07-05, completed=False
+\`\`\`
+
+**Screenshot Here **
+
+
+
+ ->
