@@ -109,6 +109,7 @@ class Scheduler:
     """The 'brain' that builds a daily plan from an Owner's pets and tasks."""
 
     def __init__(self, owner: Owner):
+        """Create a Scheduler bound to the given Owner whose tasks it will plan."""
         self.owner = owner
 
     def build_daily_plan(self):
