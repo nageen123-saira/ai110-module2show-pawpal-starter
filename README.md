@@ -66,6 +66,27 @@ pytest --cov
 
 Sample test output:
 
+
+=== Today's Plan for Jordan (budget: 90 min) ===
+  [08:00] Morning walk (30 min, high priority)
+      -> high priority, fits in remaining budget (90 min left before this task)
+  [08:15] Feeding (10 min, high priority)
+      -> high priority, fits in remaining budget (60 min left before this task)
+  [09:00] Feeding (10 min, high priority)
+      -> high priority, fits in remaining budget (50 min left before this task)
+  [flexible] Litter box cleaning (10 min, medium priority)
+      -> medium priority, fits in remaining budget (40 min left before this task)
+  [flexible] Play time (20 min, medium priority)
+      -> medium priority, fits in remaining budget (30 min left before this task)
+
+=== Conflict Warnings ===
+  ! Conflict: 'Morning walk' (08:00, 30 min) overlaps with 'Feeding' (08:15, 10 min)
+
+=== Filter Demo: Mochi's tasks only ===
+  - Morning walk (high)
+  - Feeding (high)
+  - Brushing (low)
+
 ```
 # Paste your pytest output here
 ```
